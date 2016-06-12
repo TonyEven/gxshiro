@@ -8,7 +8,7 @@ import org.apache.shiro.realm.Realm;
 /**
  * Created by zhaoguoxin on 16/6/12.
  */
-public class ShiroRealm implements Realm {
+public class MyRealm implements Realm {
     public String getName() {
         return null;
     }
