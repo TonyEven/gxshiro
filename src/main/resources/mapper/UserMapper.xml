@@ -1,24 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-config.dtd">
-<configuration>
-    <!--<environments default="development">-->
-        <!--<environment id="development">-->
-            <!--<transactionManager type="JDBC"/>-->
-            <!--<dataSource type="POOLED">-->
-                <!--<property name="driver" value="${driver}"/>-->
-                <!--<property name="url" value="${url}"/>-->
-                <!--<property name="username" value="${username}"/>-->
-                <!--<property name="password" value="${password}"/>-->
-            <!--</dataSource>-->
-        <!--</environment>-->
-    <!--</environments>-->
-    <!--<mappers>-->
-        <!--<mapper resource="org/mybatis/example/BlogMapper.xml"/>-->
-    <!--</mappers>-->
-    <settings>
-        <setting name="useGeneratedKeys" value="true"/>
-        <setting name="mapUnderscoreToCamelCase" value="true"/>
-    </settings>
-</configuration>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gx.mapper.UserMapper">
+    <select id="listAll" resultType="User">
+       SELECT * FROM mydb.users
+        WHERE enabled ='1'
+        LIMIT #{offset},#{limit}
+    </select>
+    
+    <select id="getOne" resultType="User">
+        SELECT * FROM  users
+        WHERE name = #{name}
+    </select>
+</mapper>

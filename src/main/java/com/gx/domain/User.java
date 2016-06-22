@@ -17,6 +17,7 @@ public class User {
     //该用户拥有的角色
     private Role role;
 
+    public User(){}
     public User(Integer id) {
         this.id = id;
     }
@@ -79,5 +80,17 @@ public class User {
         }
 
         return roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", salt='" + salt + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

@@ -3,6 +3,7 @@ package com.gx.service.impl;
 import com.gx.domain.User;
 import com.gx.mapper.UserMapper;
 import com.gx.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<User> list() {
-        return userMapper.list();
+    public List<User> listAll(Integer offset,Integer limit) {
+        return userMapper.listAll(offset,limit);
+    }
+
+    public User getOne(String name) {
+        return userMapper.getOne(name);
     }
 }

@@ -24,10 +24,16 @@ public class UserController {
     private UserService userService;
 
 
+    @RequestMapping(value = "login",method = RequestMethod.POST)
+    private String login(){
+
+        return "";
+
+    }
 
     @RequestMapping(name = "/list", method= RequestMethod.GET)
     public String list(Model model, HttpRequest request){
-        List<User> userList=userService.list();
+        List<User> userList=userService.listAll(0,10);
         return "userList";
     }
 }
