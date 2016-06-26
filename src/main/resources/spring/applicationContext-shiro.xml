@@ -38,6 +38,13 @@
     </bean>
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
+    <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after -->
+    <!-- the lifecycleBeanProcessor has run: -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
     <!-- Define the Shiro Realm implementation you want to use to connect to your back-end -->
     <!-- security datasource: -->
     <bean id="myRealm" class="com.gx.myrealm.UserRealm">

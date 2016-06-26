@@ -6,6 +6,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,12 @@ public class UserRealm extends AuthorizingRealm {
         hashedCredentialsMatcher.setHashIterations(1024);
         //
         setCredentialsMatcher(hashedCredentialsMatcher);
+    }
+
+    public static void  main(String[] args){
+        //盐值602QINVzKxVqIsVnwtr+iQ==    t7BUUxPTmwYpE/MhEMzgdA==
+        SecureRandomNumberGenerator secureRandomNumberGenerator = new SecureRandomNumberGenerator();
+        System.out.println(secureRandomNumberGenerator.nextBytes());
     }
 
 }
