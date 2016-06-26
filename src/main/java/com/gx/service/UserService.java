@@ -1,7 +1,6 @@
 package com.gx.service;
 
 import com.gx.domain.User;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,5 +9,5 @@ import java.util.List;
  */
 public interface UserService {
     List<User> listAll(Integer offset,Integer limit);
-    User getOne(String name);
+    User findUserByLoginName(String name);
 }

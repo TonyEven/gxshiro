@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.listAll(offset,limit);
     }
 
-    public User getOne(String name) {
-        return userMapper.getOne(name);
+    public User findUserByLoginName(String name) {
+        return userMapper.findUserByLoginName(name);
     }
 }

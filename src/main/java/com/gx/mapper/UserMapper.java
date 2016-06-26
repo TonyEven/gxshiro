@@ -11,5 +11,5 @@ import java.util.List;
 public interface UserMapper {
     List<User> listAll(@Param("offset") Integer offset,@Param("limit")Integer limit);
 
-    User getOne(@Param("name") String name);
+    User findUserByLoginName(@Param("name") String name);
 }

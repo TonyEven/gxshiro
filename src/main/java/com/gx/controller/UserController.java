@@ -2,6 +2,12 @@ package com.gx.controller;
 
 import com.gx.domain.User;
 import com.gx.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -24,10 +30,26 @@ public class UserController {
     private UserService userService;
 
 
-    @RequestMapping(value = "login",method = RequestMethod.POST)
-    private String login(){
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    private String login(Model model,String userName,String password){
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, password);
+        usernamePasswordToken.setRememberMe(true);
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(usernamePasswordToken);
+        } catch (UnknownAccountException ex) {//用户名没有找到
+            ex.printStackTrace();
+        } catch (IncorrectCredentialsException ex) {//用户名密码不匹配
+            ex.printStackTrace();
+        }catch (AuthenticationException e) {//其他的登录错误
+            e.printStackTrace();
+        }
 
-        return "";
+        if(subject.isAuthenticated()){
+            return "authorityList";
+        }else{
+            return "login";
+        }
 
     }
 
