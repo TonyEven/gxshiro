@@ -16,7 +16,14 @@
     </bean>
 
     <mvc:view-controller path="/index" view-name="login"/>
+    <mvc:view-controller path="shiro-login" view-name="login"/>
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
 
+    <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after -->
+    <!-- the lifecycleBeanProcessor has run: -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
 </beans>

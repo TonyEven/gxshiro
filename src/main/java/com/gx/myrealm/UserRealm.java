@@ -7,8 +7,10 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -43,12 +45,20 @@ public class UserRealm extends AuthorizingRealm {
      */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken uptoken = (UsernamePasswordToken) token;
-        User user = userService.findUserByLoginName(uptoken.getUsername());
-        if( user != null ) {
-            return new SimpleAuthenticationInfo(user.getId(), user.getPassword(), getName());
-        } else {
-            return null;
+        String username = uptoken.getUsername();
+        User user = userService.findUserByLoginName(username);
+        if( user == null ) {
+            throw new UnknownAccountException("用户名"+user.getName()+"不存在.");
         }
+        if (user.getEnabled() != 1){
+            throw new LockedAccountException(user.getName()+"被锁定");
+        }
+        String principal = user.getName()+"("+user.getRole().getName()+")";
+        Object hashedCredentials = user.getPassword();
+        ByteSource credentialsSalt = ByteSource.Util.bytes(user.getSalt());
+        String realmName = getName();
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal,hashedCredentials, credentialsSalt,realmName);
+        return info;
     }
 
     /**
@@ -63,10 +73,17 @@ public class UserRealm extends AuthorizingRealm {
         setCredentialsMatcher(hashedCredentialsMatcher);
     }
 
-    public static void  main(String[] args){
+    public static void main(String[] args){
         //盐值602QINVzKxVqIsVnwtr+iQ==    t7BUUxPTmwYpE/MhEMzgdA==
         SecureRandomNumberGenerator secureRandomNumberGenerator = new SecureRandomNumberGenerator();
-        System.out.println(secureRandomNumberGenerator.nextBytes());
+        ByteSource byteSource = secureRandomNumberGenerator.nextBytes();
+        String algorithmName = "MD5";
+        Object source = "123456";
+        Object salt = byteSource;
+        System.out.println(salt);//rvL3/eOcpGSW0pSWOvtSjA==
+        int hashIterations = 1024;
+        Object result = new SimpleHash(algorithmName,source,salt,hashIterations);
+        System.out.println(result);//9b2da8547c0e3cac047c332191cd0735
     }
 
 }

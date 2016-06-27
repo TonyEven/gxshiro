@@ -1,4 +1,4 @@
-<jsp:forward page="WEB-INF/jsp/login.jsp"/>
+<jsp:forward page="/shiro-login"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%-- Redirect to index page --%>
