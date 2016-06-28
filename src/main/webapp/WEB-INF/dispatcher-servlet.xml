@@ -15,8 +15,10 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <mvc:view-controller path="/index" view-name="login"/>
-    <mvc:view-controller path="shiro-login" view-name="login"/>
+
+    <mvc:view-controller path="/shiro-login" view-name="login"/>
+   <!-- 配置没有权限的页面-->
+    <mvc:view-controller path="/shiro-unauthorized" view-name="unauthorized"/>
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
 
@@ -26,4 +28,8 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
+
+    <!--<bean id="menu" class="net.sf.navigator.menu.MenuLoader">-->
+        <!--<property name="menuConfig" value="classpath:/spring/menu-config.xml"/>-->
+    <!--</bean>-->
 </beans>

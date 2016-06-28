@@ -12,4 +12,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@taglib prefix="menu" uri="http://struts-menu.sf.net/tag" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
